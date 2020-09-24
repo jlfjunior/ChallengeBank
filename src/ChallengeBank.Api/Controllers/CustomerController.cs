@@ -12,7 +12,7 @@ namespace ChallengeBank.Api.Controllers
         [HttpPost]
         public IActionResult Create(CustomerViewModel model)
         {
-            return Accepted();
+            return Accepted(model);
         }
     }
 }
