@@ -1,4 +1,7 @@
 using ChallengeBank.Infra;
+using ChallengeBank.Infra.Interfaces;
+using ChallengeBank.Infra.Repositories;
+using ChallengeBank.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +27,13 @@ namespace ChallengeBank.Api
 
 
             services.AddDbContext<Context>(options => options.UseInMemoryDatabase("Test"));
+
+            services.AddTransient<CustomerService>();
+            services.AddTransient<BankAccountService>();
+            services.AddTransient<TransactionService>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IBankAccountRepository, BankAccountRepository>();
+            services.AddTransient<ITransactionRepository, TransactionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

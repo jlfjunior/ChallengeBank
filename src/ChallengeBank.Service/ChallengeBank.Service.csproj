@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChallengeBank.Domain\ChallengeBank.Domain.csproj" />
+    <ProjectReference Include="..\ChallengeBank.Infra\ChallengeBank.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChallengeBank.Domain\ChallengeBank.Domain.csproj" />
     <ProjectReference Include="..\ChallengeBank.Infra\ChallengeBank.Infra.csproj" />
+    <ProjectReference Include="..\ChallengeBank.Service\ChallengeBank.Service.csproj" />
   </ItemGroup>
 
 

@@ -4,6 +4,6 @@
     {
         void Add(T entity);
         void Update(T entity);
-        T Find(int id);
+        T Find(long id);
     }
 }

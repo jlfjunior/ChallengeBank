@@ -19,7 +19,7 @@ namespace ChallengeBank.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public BankAccount Find(int id)
+        public BankAccount Find(long id)
         {
             return _context.BankAccounts.SingleOrDefault(x => x.Id == id);
         }

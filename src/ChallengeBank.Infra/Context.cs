@@ -7,12 +7,16 @@ namespace ChallengeBank.Infra
     public class Context : DbContext
     {
         public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         public Context(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BankAccount>().Map();
+            modelBuilder.Entity<Customer>().Map();
+            modelBuilder.Entity<Transaction>().Map();
         }
     }
 }

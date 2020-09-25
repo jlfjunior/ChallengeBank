@@ -1,4 +1,5 @@
 ﻿using ChallengeBank.Api.ViewModels;
+using ChallengeBank.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChallengeBank.Api.Controllers
@@ -7,12 +8,18 @@ namespace ChallengeBank.Api.Controllers
     [Route("api/customers")]
     public class CustomerController : ControllerBase
     {
-        public CustomerController() { }
+        private readonly CustomerService _customerService;
+
+        public CustomerController(CustomerService customerService)
+        {
+            _customerService = customerService;
+        }
 
         [HttpPost]
         public IActionResult Create(CustomerViewModel model)
         {
-            return Accepted(model);
+            var customer = _customerService.Create(model.Map());
+            return Accepted(customer);
         }
     }
 }

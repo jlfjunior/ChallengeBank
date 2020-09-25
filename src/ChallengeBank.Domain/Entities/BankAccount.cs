@@ -9,5 +9,7 @@ namespace ChallengeBank.Domain.Entities
         public string AccountNumber { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public decimal Balance { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }
