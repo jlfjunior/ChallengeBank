@@ -1,5 +1,6 @@
 ﻿using ChallengeBank.Domain.Entities;
 using ChallengeBank.Infra.Interfaces;
+using System.Collections.Generic;
 
 namespace ChallengeBank.Service.Services
 {
@@ -51,6 +52,13 @@ namespace ChallengeBank.Service.Services
             _bankAccountRepository.Update(bankAccount);
 
             return transaction;
+        }
+
+        public IEnumerable<Transaction> GetTransactions(long id)
+        {
+            var transations = _transactionRepository.GetByBankAccountId(id);
+
+            return transations;
         }
     }
 }

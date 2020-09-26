@@ -1,5 +1,7 @@
-﻿using ChallengeBank.Api.ViewModels;
+﻿using ChallengeBank.Api.Results;
+using ChallengeBank.Api.ViewModels;
 using ChallengeBank.Domain.Entities;
+using ChallengeBank.Tests.Extensions;
 using ChallengeBank.Tests.Fakes;
 using System.Net;
 using System.Net.Http;
@@ -37,7 +39,7 @@ namespace ChallengeBank.Tests.Integration
 
             var response = await _startup.CreateClient().PostAsJsonAsync(_URL, model);
 
-            Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
@@ -121,6 +123,47 @@ namespace ChallengeBank.Tests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(150, bankAccount.Balance);
+        }
+
+        [Fact]
+        public async Task ShouldGetStatements()
+        {
+            var bankAccount = new BankAccount
+            {
+                AccountNumber = "12345-0",
+                BankBranch = "1233",
+                Balance = 300
+            };
+
+            _startup.DbContext.BankAccounts.Add(bankAccount);
+
+            var transaction1 = new Transaction
+            {
+                BankAccountId = bankAccount.Id,
+                Type = Domain.Enums.TransactionType.Deposit
+            };
+
+            var transaction2 = new Transaction
+            {
+                BankAccountId = bankAccount.Id,
+                Type = Domain.Enums.TransactionType.Withdraw
+            };
+
+            var transaction3 = new Transaction
+            {
+                BankAccountId = bankAccount.Id,
+                Type = Domain.Enums.TransactionType.BillPayment
+            };
+
+            _startup.DbContext.Transactions.AddRange(transaction1, transaction2, transaction3);
+            await _startup.DbContext.SaveChangesAsync();
+
+            var response = await _startup.CreateClient().GetAsync(_URL + $"/statements/{bankAccount.Id}");
+            var json = await response.Content.ReadAsJsonAsync<BankAccountStatementJson>();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(bankAccount.Id, json.BankAccountId);
+            Assert.Equal(3, json.Statements.Count);
         }
     }
 }

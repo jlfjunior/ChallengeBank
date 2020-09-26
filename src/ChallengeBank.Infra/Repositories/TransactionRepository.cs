@@ -1,5 +1,8 @@
 ﻿using ChallengeBank.Domain.Entities;
 using ChallengeBank.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChallengeBank.Infra.Repositories
 {
@@ -21,6 +24,13 @@ namespace ChallengeBank.Infra.Repositories
         public Transaction Find(long id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Transaction> GetByBankAccountId(long bankAccountId)
+        {
+            return _context.Transactions.Where(x => x.BankAccountId == bankAccountId)
+                .Include(x => x.BankAccount)
+                .ToList();
         }
 
         public void Update(Transaction entity)

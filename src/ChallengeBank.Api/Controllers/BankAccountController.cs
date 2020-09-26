@@ -1,6 +1,11 @@
-﻿using ChallengeBank.Api.ViewModels;
+﻿using ChallengeBank.Api.Results;
+using ChallengeBank.Api.ViewModels;
+using ChallengeBank.Domain.Entities;
 using ChallengeBank.Service.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChallengeBank.Api.Controllers
 {
@@ -18,34 +23,42 @@ namespace ChallengeBank.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(BankAccountViewModel model)
+        public async Task<IActionResult> Create(BankAccountViewModel model)
         {
             var bankAccount = _bankAccountService.Create(model.Map());
-            return Accepted(bankAccount);
+            return new JsonResult(bankAccount);
         }
 
         [HttpPost, Route("deposit")]
-        public IActionResult Deposit(TransactionViewModel model)
+        public async Task<IActionResult> Deposit(TransactionViewModel model)
         {
             var transaction = _transactionService.Deposit(model.MapToDeposit());
 
-            return Ok(transaction);
+            return new JsonResult(transaction);
         }
 
         [HttpPost, Route("withdraw")]
-        public IActionResult Withdraw(TransactionViewModel model)
+        public async Task<IActionResult> Withdraw(TransactionViewModel model)
         {
             var transaction = _transactionService.Withdraw(model.MapToWithdraw());
 
-            return Ok(transaction);
+            return new JsonResult(transaction);
         }
 
         [HttpPost, Route("pay")]
-        public IActionResult Pay(PaymentViewModel model)
+        public async Task<IActionResult> Pay(PaymentViewModel model)
         {
             var transaction = _transactionService.Pay(model.Map());
 
-            return Ok(transaction);
+            return new JsonResult(transaction);
+        }
+
+        [HttpGet, Route("statements/{id:long}")]
+        public async Task<IActionResult> Statements(long id)
+        {
+            var transactions = _transactionService.GetTransactions(id);
+
+            return new BankAccountStatementJson(transactions.ToList());
         }
     }
 }

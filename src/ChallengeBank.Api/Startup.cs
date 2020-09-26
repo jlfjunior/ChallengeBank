@@ -24,8 +24,10 @@ namespace ChallengeBank.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDbContext<Context>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
 
             services.AddTransient<CustomerService>();
