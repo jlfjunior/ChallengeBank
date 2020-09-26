@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChallengeBank.Domain.Entities
 {
@@ -11,5 +12,6 @@ namespace ChallengeBank.Domain.Entities
         public decimal Balance { get; set; }
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

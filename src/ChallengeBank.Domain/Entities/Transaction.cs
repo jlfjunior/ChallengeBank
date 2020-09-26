@@ -1,4 +1,6 @@
-﻿namespace ChallengeBank.Domain.Entities
+﻿using ChallengeBank.Domain.Enums;
+
+namespace ChallengeBank.Domain.Entities
 {
     public class Transaction
     {
@@ -6,5 +8,6 @@
         public long BankAccountId { get; set; }
         public BankAccount BankAccount { get; set; }
         public decimal Amount { get; set; }
+        public TransactionType Type { get; set; }
     }
 }

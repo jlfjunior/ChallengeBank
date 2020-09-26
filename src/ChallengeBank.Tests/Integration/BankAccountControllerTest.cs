@@ -94,5 +94,33 @@ namespace ChallengeBank.Tests.Integration
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(100, bankAccount.Balance);
         }
+
+        [Fact]
+        public async Task ShouldPay()
+        {
+            var bankAccount = new BankAccount
+            {
+                AccountNumber = "12345-0",
+                BankBranch = "1233",
+                Balance = 300
+            };
+
+            _startup.DbContext.BankAccounts.Add(bankAccount);
+
+            var model = new PaymentViewModel
+            {
+                BankAccountId = bankAccount.Id,
+                Amount = 150
+            };
+
+            await _startup.DbContext.SaveChangesAsync();
+
+            var response = await _startup.CreateClient().PostAsJsonAsync(_URL + "/withdraw", model);
+
+            await _startup.DbContext.Entry<BankAccount>(bankAccount).ReloadAsync();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(150, bankAccount.Balance);
+        }
     }
 }

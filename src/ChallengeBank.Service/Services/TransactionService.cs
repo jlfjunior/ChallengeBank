@@ -31,7 +31,20 @@ namespace ChallengeBank.Service.Services
         {
             var bankAccount = _bankAccountRepository.Find(transaction.BankAccountId);
 
-            if (bankAccount != null && bankAccount.Balance > transaction.Amount)
+            if (bankAccount != null && bankAccount.Balance >= transaction.Amount)
+                bankAccount.Balance -= transaction.Amount;
+
+            _transactionRepository.Add(transaction);
+            _bankAccountRepository.Update(bankAccount);
+
+            return transaction;
+        }
+
+        public Transaction Pay(Transaction transaction)
+        {
+            var bankAccount = _bankAccountRepository.Find(transaction.BankAccountId);
+
+            if (bankAccount != null && bankAccount.Balance >= transaction.Amount)
                 bankAccount.Balance -= transaction.Amount;
 
             _transactionRepository.Add(transaction);

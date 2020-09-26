@@ -1,4 +1,5 @@
 ﻿using ChallengeBank.Domain.Entities;
+using ChallengeBank.Domain.Enums;
 
 namespace ChallengeBank.Api.ViewModels
 {
@@ -8,12 +9,23 @@ namespace ChallengeBank.Api.ViewModels
         public long BankAccountIdDestination { get; set; }
         public decimal Amount { get; set; }
 
-        public Transaction Map()
+        public Transaction MapToDeposit()
         {
             return new Transaction
             {
                 BankAccountId = BankAccountId,
-                Amount = Amount
+                Amount = Amount,
+                Type = TransactionType.Deposit
+            };
+        }
+
+        public Transaction MapToWithdraw()
+        {
+            return new Transaction
+            {
+                BankAccountId = BankAccountId,
+                Amount = Amount,
+                Type = TransactionType.Withdraw
             };
         }
     }

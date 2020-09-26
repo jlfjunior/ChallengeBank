@@ -27,7 +27,7 @@ namespace ChallengeBank.Api.Controllers
         [HttpPost, Route("deposit")]
         public IActionResult Deposit(TransactionViewModel model)
         {
-            var transaction = _transactionService.Deposit(model.Map());
+            var transaction = _transactionService.Deposit(model.MapToDeposit());
 
             return Ok(transaction);
         }
@@ -35,7 +35,15 @@ namespace ChallengeBank.Api.Controllers
         [HttpPost, Route("withdraw")]
         public IActionResult Withdraw(TransactionViewModel model)
         {
-            var transaction = _transactionService.Withdraw(model.Map());
+            var transaction = _transactionService.Withdraw(model.MapToWithdraw());
+
+            return Ok(transaction);
+        }
+
+        [HttpPost, Route("pay")]
+        public IActionResult Pay(PaymentViewModel model)
+        {
+            var transaction = _transactionService.Pay(model.Map());
 
             return Ok(transaction);
         }
