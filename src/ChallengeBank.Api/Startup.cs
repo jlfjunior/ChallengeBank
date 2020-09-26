@@ -26,7 +26,7 @@ namespace ChallengeBank.Api
             services.AddControllers();
 
 
-            services.AddDbContext<Context>(options => options.UseInMemoryDatabase("Test"));
+            services.AddDbContext<Context>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
 
             services.AddTransient<CustomerService>();
             services.AddTransient<BankAccountService>();
