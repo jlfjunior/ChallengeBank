@@ -38,7 +38,7 @@ namespace ChallengeBank.Api.Controllers
         [HttpPost, Route("withdraw")]
         public async Task<IActionResult> Withdraw(TransactionViewModel model)
         {
-            var transaction = _transactionService.Withdraw(model.MapToWithdraw());
+            var transaction = _transactionService.WithdrawAndPayment(model.MapToWithdraw());
 
             return new JsonResult(transaction);
         }
@@ -46,7 +46,7 @@ namespace ChallengeBank.Api.Controllers
         [HttpPost, Route("pay")]
         public async Task<IActionResult> Pay(PaymentViewModel model)
         {
-            var transaction = _transactionService.Pay(model.Map());
+            var transaction = _transactionService.WithdrawAndPayment(model.Map());
 
             return new JsonResult(transaction);
         }

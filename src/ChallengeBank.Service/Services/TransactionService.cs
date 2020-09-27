@@ -28,20 +28,7 @@ namespace ChallengeBank.Service.Services
             return transaction;
         }
 
-        public Transaction Withdraw(Transaction transaction)
-        {
-            var bankAccount = _bankAccountRepository.Find(transaction.BankAccountId);
-
-            if (bankAccount != null && bankAccount.Balance >= transaction.Amount)
-                bankAccount.Balance -= transaction.Amount;
-
-            _transactionRepository.Add(transaction);
-            _bankAccountRepository.Update(bankAccount);
-
-            return transaction;
-        }
-
-        public Transaction Pay(Transaction transaction)
+        public Transaction WithdrawAndPayment(Transaction transaction)
         {
             var bankAccount = _bankAccountRepository.Find(transaction.BankAccountId);
 
