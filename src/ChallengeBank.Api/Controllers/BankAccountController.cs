@@ -69,7 +69,7 @@ namespace ChallengeBank.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var bankAccounts = _bankAccountService.GetBankAccounts(); ;
+            var bankAccounts = _bankAccountService.GetBankAccounts();
 
             return new JsonResult(bankAccounts);
         }
