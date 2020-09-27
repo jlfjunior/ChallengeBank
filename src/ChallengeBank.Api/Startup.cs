@@ -29,8 +29,8 @@ namespace ChallengeBank.Api
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<Context>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
-
+            //services.AddDbContext<Context>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
+            services.AddDbContext<Context>(options => options.UseInMemoryDatabase("Teste"));
             services.AddScoped<AuthAttribute>();
 
             services.AddTransient<CustomerService>();
@@ -40,6 +40,14 @@ namespace ChallengeBank.Api
             services.AddTransient<IBankAccountRepository, BankAccountRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();
             services.AddTransient<IDailyBalanceRepository, DailyBalanceRepository>();
+
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policys => policys
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("Content-Disposition")
+            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +57,8 @@ namespace ChallengeBank.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors();
 
             app.UseRouting();
 
