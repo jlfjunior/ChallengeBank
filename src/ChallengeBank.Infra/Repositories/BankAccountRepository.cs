@@ -1,5 +1,6 @@
 ﻿using ChallengeBank.Domain.Entities;
 using ChallengeBank.Infra.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChallengeBank.Infra.Repositories
@@ -24,9 +25,20 @@ namespace ChallengeBank.Infra.Repositories
             return _context.BankAccounts.SingleOrDefault(x => x.Id == id);
         }
 
+        public IEnumerable<BankAccount> GetBankAccountsAvailableForRemunerate()
+        {
+            return _context.BankAccounts.Where(x => x.Balance > 0).ToList();
+        }
+
         public void Update(BankAccount entity)
         {
             _context.BankAccounts.Update(entity);
+            _context.SaveChanges();
+        }
+
+        public void UpdateRange(ICollection<BankAccount> bankAccounts)
+        {
+            _context.BankAccounts.AddRange(bankAccounts);
             _context.SaveChanges();
         }
     }

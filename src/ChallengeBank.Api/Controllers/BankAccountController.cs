@@ -1,9 +1,7 @@
 ﻿using ChallengeBank.Api.Results;
 using ChallengeBank.Api.ViewModels;
-using ChallengeBank.Domain.Entities;
 using ChallengeBank.Service.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,6 +57,13 @@ namespace ChallengeBank.Api.Controllers
             var transactions = _transactionService.GetTransactions(id);
 
             return new BankAccountStatementJson(transactions.ToList());
+        }
+
+        [HttpPost, Route("remunerate")]
+        public async Task<IActionResult> Remunerate()
+        {
+            _bankAccountService.RemunerateAccounts();
+            return Ok();
         }
     }
 }

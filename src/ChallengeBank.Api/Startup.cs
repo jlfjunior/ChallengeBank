@@ -36,6 +36,7 @@ namespace ChallengeBank.Api
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IBankAccountRepository, BankAccountRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();
+            services.AddTransient<IDailyBalanceRepository, DailyBalanceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

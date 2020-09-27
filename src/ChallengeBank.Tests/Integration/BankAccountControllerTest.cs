@@ -165,5 +165,51 @@ namespace ChallengeBank.Tests.Integration
             Assert.Equal(bankAccount.Id, json.BankAccountId);
             Assert.Equal(3, json.Statements.Count);
         }
+
+        [Fact]
+        public async Task ShouldRemunerateAccounts()
+        {
+            var bankAccount1 = new BankAccount
+            {
+                Customer = new Customer { },
+                Balance = 100
+            };
+
+            var bankAccount2 = new BankAccount
+            {
+                Customer = new Customer { },
+                Balance = 200
+            };
+
+            var bankAccount3 = new BankAccount
+            {
+                Customer = new Customer { },
+                Balance = 300
+            };
+
+            var bankAccount4 = new BankAccount
+            {
+                Customer = new Customer { },
+                Balance = 0
+            };
+
+            var bankAccount5 = new BankAccount
+            {
+                Customer = new Customer { },
+                Balance = 0
+            };
+
+            _startup.DbContext.BankAccounts.AddRange(bankAccount1, bankAccount2, bankAccount3, bankAccount4, bankAccount5);
+            await _startup.DbContext.SaveChangesAsync();
+
+            var response = await _startup.CreateClient().PostAsync(_URL + "/remunerate", null);
+            //_startup.DbContext.Entry<BankAccount>(bankAccount1).Reload();
+            //_startup.DbContext.Entry<BankAccount>(bankAccount2).Reload();
+            //_startup.DbContext.Entry<BankAccount>(bankAccount3).Reload();
+            //_startup.DbContext.Entry<BankAccount>(bankAccount4).Reload();
+            //_startup.DbContext.Entry<BankAccount>(bankAccount5).Reload();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }
