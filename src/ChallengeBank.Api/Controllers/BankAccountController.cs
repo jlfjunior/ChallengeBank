@@ -65,5 +65,13 @@ namespace ChallengeBank.Api.Controllers
             _bankAccountService.RemunerateAccounts();
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            var bankAccounts = _bankAccountService.GetBankAccounts(); ;
+
+            return new JsonResult(bankAccounts);
+        }
     }
 }

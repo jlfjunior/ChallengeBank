@@ -25,6 +25,11 @@ namespace ChallengeBank.Service.Services
             return bankAccount;
         }
 
+        public IEnumerable<BankAccount> GetBankAccounts()
+        {
+            return _bankAccountRepository.GetBankAccounts();
+        }
+
         public void RemunerateAccounts()
         {
             var bankAccounts = _bankAccountRepository.GetBankAccountsAvailableForRemunerate();

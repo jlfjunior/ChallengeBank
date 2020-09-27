@@ -1,5 +1,6 @@
 ﻿using ChallengeBank.Domain.Entities;
 using ChallengeBank.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +24,13 @@ namespace ChallengeBank.Infra.Repositories
         public BankAccount Find(long id)
         {
             return _context.BankAccounts.SingleOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<BankAccount> GetBankAccounts()
+        {
+            return _context.BankAccounts
+                .Include(x => x.Customer)
+                .ToList();
         }
 
         public IEnumerable<BankAccount> GetBankAccountsAvailableForRemunerate()
