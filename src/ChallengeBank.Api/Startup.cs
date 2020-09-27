@@ -1,3 +1,4 @@
+using ChallengeBank.Api.Filters;
 using ChallengeBank.Infra;
 using ChallengeBank.Infra.Interfaces;
 using ChallengeBank.Infra.Repositories;
@@ -29,6 +30,8 @@ namespace ChallengeBank.Api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddDbContext<Context>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
+
+            services.AddScoped<AuthAttribute>();
 
             services.AddTransient<CustomerService>();
             services.AddTransient<BankAccountService>();

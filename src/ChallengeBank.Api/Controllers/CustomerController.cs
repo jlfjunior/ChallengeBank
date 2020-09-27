@@ -1,4 +1,5 @@
-﻿using ChallengeBank.Api.ViewModels;
+﻿using ChallengeBank.Api.Filters;
+using ChallengeBank.Api.ViewModels;
 using ChallengeBank.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace ChallengeBank.Api.Controllers
             _customerService = customerService;
         }
 
-        [HttpPost]
+        [HttpPost, Auth]
         public IActionResult Create(CustomerViewModel model)
         {
             var customer = _customerService.Create(model.Map());

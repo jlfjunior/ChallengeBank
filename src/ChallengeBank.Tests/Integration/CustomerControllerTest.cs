@@ -26,7 +26,9 @@ namespace ChallengeBank.Tests.Integration
                 LastName = "Melo"
             };
 
-            var response = await _startup.CreateClient().PostAsJsonAsync(_URL, model);
+            var httpClient = _startup.CreateClient();
+            httpClient.DefaultRequestHeaders.Add("Secret", "1234567890");
+            var response = await httpClient.PostAsJsonAsync(_URL, model);
 
             Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
         }
