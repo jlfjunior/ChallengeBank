@@ -1,5 +1,6 @@
 ﻿using ChallengeBank.Domain.Entities;
 using ChallengeBank.Infra.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChallengeBank.Infra.Repositories
@@ -22,6 +23,11 @@ namespace ChallengeBank.Infra.Repositories
         public Customer Find(long id)
         {
             return _context.Customers.SingleOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<Customer> GetAll()
+        {
+            return _context.Customers.ToList();
         }
 
         public void Update(Customer entity)

@@ -1,5 +1,6 @@
 ﻿using ChallengeBank.Domain.Entities;
 using ChallengeBank.Infra.Interfaces;
+using System.Collections.Generic;
 
 namespace ChallengeBank.Service.Services
 {
@@ -17,6 +18,11 @@ namespace ChallengeBank.Service.Services
             _customerRepository.Add(customer);
 
             return customer;
+        }
+
+        public IEnumerable<Customer> GetCustomers()
+        {
+            return _customerRepository.GetAll();
         }
     }
 }
