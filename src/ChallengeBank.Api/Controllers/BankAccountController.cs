@@ -51,7 +51,7 @@ namespace ChallengeBank.Api.Controllers
             return new JsonResult(transaction);
         }
 
-        [HttpGet, Route("statements/{id:long}")]
+        [HttpGet, Route("statements/{id}")]
         public async Task<IActionResult> Statements(long id)
         {
             var transactions = _transactionService.GetTransactions(id);

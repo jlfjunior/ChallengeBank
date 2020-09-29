@@ -1,4 +1,5 @@
 ﻿using ChallengeBank.Domain.Entities;
+using ChallengeBank.Domain.Enums;
 
 namespace ChallengeBank.Api.Results
 {
@@ -6,6 +7,7 @@ namespace ChallengeBank.Api.Results
     {
         public long Id { get; set; }
         public decimal Amount { get; set; }
+        public string Type { get; set; }
 
         public StatementJson() { }
 
@@ -13,6 +15,15 @@ namespace ChallengeBank.Api.Results
         {
             Id = transaction.Id;
             Amount = transaction.Amount;
+
+            if (transaction.Type == TransactionType.Deposit)
+                Type = "Deposito";
+            else if (transaction.Type == TransactionType.Withdraw)
+                Type = "Saque";
+            else if (transaction.Type == TransactionType.BillPayment)
+                Type = "Pagamento-conta";
+            else if (transaction.Type == TransactionType.Interest)
+                Type = "Juros";
         }
     }
 }

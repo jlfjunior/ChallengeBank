@@ -14,6 +14,10 @@ namespace ChallengeBank.Infra.Mappings
             entity.Property(x => x.AccountNumber);
             entity.Property(x => x.Balance);
             entity.Property(x => x.CreatedAt);
+
+            entity.HasMany(x => x.Transactions)
+                .WithOne(x => x.BankAccount)
+                .HasForeignKey(x => x.BankAccountId);
         }
     }
 }

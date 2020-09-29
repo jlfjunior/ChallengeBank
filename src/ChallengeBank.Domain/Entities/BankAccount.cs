@@ -13,5 +13,6 @@ namespace ChallengeBank.Domain.Entities
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
         public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<DailyBalance> DailyBalances { get; set; }
     }
 }
