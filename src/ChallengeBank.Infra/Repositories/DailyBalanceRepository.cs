@@ -2,6 +2,7 @@
 using ChallengeBank.Infra.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChallengeBank.Infra.Repositories
 {
@@ -29,6 +30,11 @@ namespace ChallengeBank.Infra.Repositories
         public DailyBalance Find(long id)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<DailyBalance> GetDailyBalances(DateTime date)
+        {
+            return _context.DailyBalances.Where(x => x.Date.Date == date.Date).ToList();
         }
 
         public void Update(DailyBalance entity)

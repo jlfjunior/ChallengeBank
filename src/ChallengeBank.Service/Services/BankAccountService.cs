@@ -3,6 +3,8 @@ using ChallengeBank.Domain.Enums;
 using ChallengeBank.Infra.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ChallengeBank.Service.Services
 {
@@ -32,12 +34,14 @@ namespace ChallengeBank.Service.Services
 
         public void RemunerateAccounts()
         {
+            var dailyBalancesToday = _dailyBalanceRepository.GetDailyBalances(DateTime.Now);
             var bankAccounts = _bankAccountRepository.GetBankAccountsAvailableForRemunerate();
             var bankAccountForUpdate = new List<BankAccount>();
             var dailyBalances = new List<DailyBalance>();
             var transactions = new List<Transaction>();
-
-            foreach (var item in bankAccounts)
+            var bankAccountId = dailyBalancesToday.Select(x => x.BankAccountId).ToList();
+            
+            foreach (var item in bankAccounts.Where(x => !bankAccountId.Contains(x.Id)).ToList())
             {
                 var dailyBalance = new DailyBalance
                 {
